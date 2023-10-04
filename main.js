@@ -36,14 +36,16 @@ const pokeCards = () => {
         })
         .join('');
       return ` <div class="grid-item" id="grid1">
-    <div class=id><p>${pokemon.id}</p> </div
+    <div class=id><p>${pokemon.id}</p> </div>
           <span><img src="${pokemon.img}"<></span>
-          <h3>${pokemon.name}</h3></span>
-          <div class="types">
-          ${typeIcons}
-        </div>
+          <div class="pokeInfo">
+            <h3>${pokemon.name}</h3></span>
+             <div class="types">
+           ${typeIcons}
+             </div>
          <div class="typesNames">
          <p>${pokemon.types}</p>
+         </div>
          </div>
       </div>`;
     })
