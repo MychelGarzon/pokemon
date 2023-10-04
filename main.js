@@ -5,23 +5,45 @@ const fetchData = async () => {
   await fetch('https://pokeapi.co/api/v2/pokemon?limit=121&offset=0')
     .then((response) => response.json())
     .then((data) => {
-      pokeData = data.results;
-      console.log(data.results);
+      const fetches = data.results.map((item) => {
+        return fetch(item.url)
+          .then((response) => response.json())
+          .then((data) => {
+            return {
+              id: data.id,
+              name: data.name,
+              img: data.sprites.other['official-artwork'].front_default,
+              types: data.types.map((type) => type.type.name),
+            };
+          });
+      });
+      Promise.all(fetches).then((res) => {
+        pokeData = res;
+        pokeCards();
+        console.log(pokeData);
+      });
     });
-  pokeCards();
 };
 
 const pokeCards = () => {
   const cards = pokeData
+
     .map((pokemon) => {
+      const typeIcons = pokemon.types
+        .map((type) => {
+          return `<img class="icon" src="media/icons/${type}.ico" alt="${type}" />`;
+        })
+        .join('');
       return ` <div class="grid-item" id="grid1">
-    <div class=id><p>1</p> </div
-          <span><img src="/media/Pikachu.png" alt="Pikachu" />
+    <div class=id><p>${pokemon.id}</p> </div
+          <span><img src="${pokemon.img}"<></span>
           <h3>${pokemon.name}</h3></span>
-          <div class=types>
-          <img class="icon" id="normal" src="media/icons/Normal.ico" /></span> 
-          <img class="icon" id="normal" src="media/icons/Electric.ico" /></span> 
-          </div>
+             
+          <div class="types">
+          ${typeIcons}
+        
+        </div>
+         
       </div>`;
     })
     .join('');
