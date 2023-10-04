@@ -1,8 +1,9 @@
 const content = document.querySelector('.grid-container');
+
 let pokeData = [1, 2, 3, 4, 5];
 
 const fetchData = async () => {
-  await fetch('https://pokeapi.co/api/v2/pokemon?limit=121&offset=0')
+  await fetch('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0')
     .then((response) => response.json())
     .then((data) => {
       const fetches = data.results.map((item) => {
@@ -38,12 +39,12 @@ const pokeCards = () => {
     <div class=id><p>${pokemon.id}</p> </div
           <span><img src="${pokemon.img}"<></span>
           <h3>${pokemon.name}</h3></span>
-             
           <div class="types">
           ${typeIcons}
-        
         </div>
-         
+         <div class="typesNames">
+         <p>${pokemon.types}</p>
+         </div>
       </div>`;
     })
     .join('');
