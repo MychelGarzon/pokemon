@@ -7,9 +7,17 @@
 body {
   background-color: #ad9528;
   max-height: 100vh;
+  max-width: 100vw;
   text-align: center;
   font-family: 'Press Start 2P', cursive;
 }
+
+.generation-button button {
+  background-color: navy;
+  color: whitesmoke;
+  width: 5rem;
+}
+
 .grid-container {
   display: grid;
   grid-gap: 15rem;
@@ -82,16 +90,16 @@ h3 {
 
 .id {
   display: flex;
-  background-image: url('./media/icons/Pokemon.ico');
+  border-radius: 10%;
+  background-color: navy;
   background-size: cover;
   height: 50px;
   width: 50px;
   align-items: center;
-  text-align: center;
   justify-content: center;
-  color: black;
+  color: whitesmoke;
+  filter: brightness(100%);
   font-size: large;
-  filter: blur(0.5px);
 }
 
 .typesNames {
@@ -107,6 +115,11 @@ h3 {
   background-color: beige;
   margin-bottom: 1rem;
   border-radius: 2%;
+}
+
+.information {
+  text-align: center;
+  font-size: 0.8rem;
 }
 
 @media screen and (max-width: 1000px) {
