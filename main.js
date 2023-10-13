@@ -13,6 +13,65 @@ const generation9Button = document.querySelector('#IXgenerationButton');
 
 let pokeData = [1, 2, 3, 4, 5];
 let generationName = '';
+
+generation1Button.addEventListener('click', () => {
+  generationName = 'Generation I';
+  fetchData('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0')
+    .then(pokeCards)
+    .then(infoDisplay);
+});
+
+generation2Button.addEventListener('click', () => {
+  generationName = 'Generation II';
+  fetchData('https://pokeapi.co/api/v2/pokemon?limit=100&offset=151')
+    .then(pokeCards)
+    .then(infoDisplay);
+});
+
+generation3Button.addEventListener('click', () => {
+  generationName = 'Generation III';
+  fetchData('https://pokeapi.co/api/v2/pokemon?limit=135&offset=251')
+    .then(pokeCards)
+    .then(infoDisplay);
+});
+generation4Button.addEventListener('click', () => {
+  generationName = 'Generation IV';
+  fetchData('https://pokeapi.co/api/v2/pokemon?limit=107&offset=386')
+    .then(pokeCards)
+    .then(infoDisplay);
+});
+generation5Button.addEventListener('click', () => {
+  generationName = 'Generation V';
+  fetchData('https://pokeapi.co/api/v2/pokemon?limit=156&offset=493').then(
+    pokeCards
+  );
+});
+generation6Button.addEventListener('click', () => {
+  generationName = 'Generation VI';
+  fetchData('https://pokeapi.co/api/v2/pokemon?limit=72&offset=649').then(
+    pokeCards
+  );
+});
+generation7Button.addEventListener('click', () => {
+  generationName = 'Generation VII';
+  fetchData('https://pokeapi.co/api/v2/pokemon?limit=88&offset=721')
+    .then(pokeCards)
+    .then(infoDisplay);
+});
+generation8Button.addEventListener('click', () => {
+  generationName = 'Generation VIII';
+  fetchData('https://pokeapi.co/api/v2/pokemon?limit=96&offset=809')
+    .then(pokeCards)
+    .then(infoDisplay);
+});
+
+generation9Button.addEventListener('click', () => {
+  generationName = 'Generation IX';
+  fetchData('https://pokeapi.co/api/v2/pokemon?limit=116&offset=905')
+    .then(pokeCards)
+    .then(infoDisplay);
+});
+
 const fetchData = async (url) => {
   await fetch(url)
     .then((response) => response.json())
@@ -31,18 +90,14 @@ const fetchData = async (url) => {
             };
           });
       });
-      Promise.all(fetches).then((res) => {
+      return Promise.all(fetches).then((res) => {
         pokeData = res;
       });
     });
 };
 
 const pokeCards = () => {
-  const filteredPokeData = pokeData.filter((pokemon) =>
-    pokemon.name.toLowerCase().includes(searchBar.value.toLowerCase())
-  );
-
-  const cards = filteredPokeData
+  const cards = pokeData
     .map((pokemon) => {
       const typeIcons = pokemon.types
         .map((type) => {
@@ -64,67 +119,27 @@ const pokeCards = () => {
       </div>`;
     })
     .join('');
-
   content.innerHTML = cards;
-  pokemonCount.textContent = `The number of Pokemon in the ${generationName} displayed are: ${filteredPokeData.length}`;
 };
 
-searchBar.addEventListener('input', pokeCards);
+const infoDisplay = () => {
+  pokemonCount.textContent = `The number of Pokemon in the ${generationName} displayed are: ${pokeData.length}`;
+};
 
-generation1Button.addEventListener('click', () => {
-  generationName = 'Generation I';
-  fetchData('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0').then(
-    pokeCards
-  );
-});
+const searchCards = () => {
+  const query = searchBar.value.toLowerCase();
+  const cards = document.querySelectorAll('.grid-item');
 
-generation2Button.addEventListener('click', () => {
-  generationName = 'Generation II';
-  fetchData('https://pokeapi.co/api/v2/pokemon?limit=100&offset=151').then(
-    pokeCards
-  );
-});
+  cards.forEach((card) => {
+    const textContent = card
+      .querySelector('.pokeInfo h3')
+      .textContent.toLowerCase();
 
-generation3Button.addEventListener('click', () => {
-  generationName = 'Generation III';
-  fetchData('https://pokeapi.co/api/v2/pokemon?limit=135&offset=251').then(
-    pokeCards
-  );
-});
-generation4Button.addEventListener('click', () => {
-  generationName = 'Generation IV';
-  fetchData('https://pokeapi.co/api/v2/pokemon?limit=107&offset=386').then(
-    pokeCards
-  );
-});
-generation5Button.addEventListener('click', () => {
-  generationName = 'Generation V';
-  fetchData('https://pokeapi.co/api/v2/pokemon?limit=156&offset=493').then(
-    pokeCards
-  );
-});
-generation6Button.addEventListener('click', () => {
-  generationName = 'Generation VI';
-  fetchData('https://pokeapi.co/api/v2/pokemon?limit=72&offset=649').then(
-    pokeCards
-  );
-});
-generation7Button.addEventListener('click', () => {
-  generationName = 'Generation VII';
-  fetchData('https://pokeapi.co/api/v2/pokemon?limit=88&offset=721').then(
-    pokeCards
-  );
-});
-generation8Button.addEventListener('click', () => {
-  generationName = 'Generation VIII';
-  fetchData('https://pokeapi.co/api/v2/pokemon?limit=96&offset=809').then(
-    pokeCards
-  );
-});
-
-generation9Button.addEventListener('click', () => {
-  generationName = 'Generation IX';
-  fetchData('https://pokeapi.co/api/v2/pokemon?limit=116&offset=905').then(
-    pokeCards
-  );
-});
+    if (textContent.includes(query)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+};
+searchBar.addEventListener('input', searchCards);
