@@ -124,7 +124,7 @@ const pokeCards = () => {
 };
 
 const infoDisplay = () => {
-  pokemonCount.textContent = `The number of Pokemon in the ${generationName} displayed are: ${pokeData.length}`;
+  pokemonCount.textContent = `${generationName} has ${pokeData.length} Pokemons`;
 };
 
 const searchCards = () => {
